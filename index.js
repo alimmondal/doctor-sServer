@@ -24,10 +24,10 @@ const port = 5000;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-  const appointmentCollection = client.db("doctorsPortal").collection("appointments");
-  const doctorCollection = client.db("doctorsPortal").collection("doctors");
+  const appointmentCollection = client.db("findDoctors").collection("allAppointments");
+  const doctorCollection = client.db("findDoctors").collection("admins");
 
-app.post('/addAppointment', (req, res) => {
+app.post('/getAnAppointment', (req, res) => {
     const appointment = req.body;
     console.log(appointment);
     appointmentCollection.insertOne(appointment)
@@ -37,7 +37,7 @@ app.post('/addAppointment', (req, res) => {
 })
 
 
-app.get('/appointments', (req, res) => {
+app.get('/postAppointments', (req, res) => {
   appointmentCollection.find({})
       .toArray((err, documents) => {
           res.send(documents);
@@ -46,7 +46,7 @@ app.get('/appointments', (req, res) => {
 
 
 
-app.post('/appointmentsByDate', (req, res) => {
+app.post('/byDateAppointments', (req, res) => {
   const date = req.body;
   const email = req.body.email;
   doctorCollection.find({email: email})
@@ -65,7 +65,7 @@ app.post('/appointmentsByDate', (req, res) => {
 });
 
 
-app.post('/addADoctor', (req, res) => {
+app.post('/addAnAdmin', (req, res) => {
   const file = req.files.file;
   const name = req.body.name;
   const email = req.body.email;
@@ -86,14 +86,14 @@ app.post('/addADoctor', (req, res) => {
 });
 
 
-app.get('/doctors', (req, res) => {
+app.get('/admins', (req, res) => {
   doctorCollection.find({})
       .toArray((err, documents) => {
           res.send(documents);
       })
 });
 
-app.post('/isDoctor', (req, res) => {
+app.post('/isAdmins', (req, res) => {
   const email = req.body.email;
   doctorCollection.find({ email: email })
       .toArray((err, doctors) => {
@@ -111,7 +111,7 @@ app.post('/isDoctor', (req, res) => {
 
 
 app.get('/', (req, res) => {
-  res.send("hello from db it's working working")
+  res.send("Hello from db, it's working working")
 })
 
 
