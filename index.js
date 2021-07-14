@@ -21,40 +21,6 @@ const port = 5000;
 
 
 
-
-
-
-
-
-
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-
-// app.use(express.static(path.join(__dirname, 'client/build')));
-app.use('*/css',express.static('public/css'));
-app.use('*/js',express.static('public/js'));
-app.use('*/images',express.static('public/images'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded())
-app.use(cors())
-
-
-
-
-
-
-
-
-
-
-
-
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const appointmentCollection = client.db("findDoctors").collection("allAppointments");
